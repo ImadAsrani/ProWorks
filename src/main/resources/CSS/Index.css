@@ -1,0 +1,27 @@
+
+/* Set the style of app main window */
+
+
+#main{
+
+    -fx-background-color: transparent;
+    -fx-background-radius: 9;
+    -fx-background-color: white;
+
+}
+
+/* Gradient background when hoovering over the window buttons */
+
+.botonesventana:hover {
+
+    -fx-background-radius: 6;
+    -fx-background-color: linear-gradient(from 25% 55% to 100% 100%, #9e00fc, #07cdcc);
+    -fx-opacity: 0.5;
+
+}
+
+/* Remove background when no hoovering */
+
+.botonesventana {
+   -fx-background-color: transparent;
+}
