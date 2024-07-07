@@ -2,10 +2,10 @@
 /* Set the style of app main window */
 
 
-#main{
+#mainScreen{
 
     -fx-background-color: transparent;
-    -fx-background-radius: 9;
+    -fx-background-radius: 9 9 12 12;
     -fx-background-color: white;
 
 }
@@ -25,3 +25,41 @@
 .botonesventana {
    -fx-background-color: transparent;
 }
+
+
+
+/* Coloring the background of left and center zones */
+
+#lateral{
+    -fx-background-color: #424242;
+    -fx-background-radius: 0 0 0 9;
+}
+
+#centro{
+    -fx-background-color: #F4F4F4;
+    -fx-background-radius: 0 0 9 0;
+}
+
+
+
+/* Font test */
+
+
+.leftbuttons {
+    -fx-background-color: transparent;
+}
+
+.leftbuttons {
+    -fx-text-fill: white;
+}
+
+.leftbuttons:hover {
+    -fx-text-fill: #4cacf4;
+}
+
+.leftbuttons:pressed {
+    -fx-text-fill: #3481b2;
+}
+
+
+

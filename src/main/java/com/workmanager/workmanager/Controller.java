@@ -2,87 +2,104 @@ package com.workmanager.workmanager;
 
 import animatefx.animation.AnimationFX;
 import animatefx.animation.FadeOut;
-import animatefx.animation.ZoomIn;
 import animatefx.animation.ZoomOut;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import java.io.IOException;
+import org.kordamp.ikonli.bootstrapicons.BootstrapIcons;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 public class Controller {
+
+    // Window frame buttons
     @FXML
-    private Button minimize, maximize, close;
+    private Button minimizeButton, maximizeButton, closeButton;
+
+    // Left panel buttons
+    @FXML
+    private Button velocidadavance;
 
     @FXML
-    private Pane main;
+    private Pane mainScreen;
 
+    // Image assets from the maximize and normalize buttons
     @FXML
-    private ImageView i2, i4;
+    private ImageView maximizeIMAGE, normalizeIMAGE;
+
+    // The different screens in the app
+    @FXML
+    private VBox pantalla1;
 
 
     @FXML
     private void initialize(){
 
-        ImageView i1=new ImageView(new Image("file:src/main/resources/Images/WindowButtons/signo-menos.png"));
-        i2=new ImageView(new Image("file:src/main/resources/Images/WindowButtons/redimensionar.png"));
-        ImageView i3=new ImageView(new Image("file:src/main/resources/Images/WindowButtons/cruzar.png"));
-        i4=new ImageView(new Image("file:src/main/resources/Images/WindowButtons/normalizar.png"));
+        ImageView minimizeIMAGE=new ImageView(new Image("file:src/main/resources/Images/WindowButtons/minimize.png"));
+        ImageView closeIMAGE=new ImageView(new Image("file:src/main/resources/Images/WindowButtons/close.png"));
+        maximizeIMAGE =new ImageView(new Image("file:src/main/resources/Images/WindowButtons/maximize.png"));
+        normalizeIMAGE =new ImageView(new Image("file:src/main/resources/Images/WindowButtons/normalize.png"));
 
-        i1.setFitWidth(15);
-        i1.setFitHeight(15);
+        minimizeIMAGE.setFitWidth(13);
+        minimizeIMAGE.setFitHeight(13);
 
-        i2.setFitWidth(15);
-        i2.setFitHeight(15);
+        maximizeIMAGE.setFitWidth(13);
+        maximizeIMAGE.setFitHeight(13);
 
-        i3.setFitWidth(15);
-        i3.setFitHeight(15);
+        closeIMAGE.setFitWidth(13);
+        closeIMAGE.setFitHeight(13);
 
-        i4.setFitWidth(15);
-        i4.setFitHeight(15);
+        normalizeIMAGE.setFitWidth(13);
+        normalizeIMAGE.setFitHeight(13);
 
-        minimize.setGraphic(i1);
-        maximize.setGraphic(i2);
-        close.setGraphic(i3);
+        minimizeButton.setGraphic(minimizeIMAGE);
+        maximizeButton.setGraphic(maximizeIMAGE);
+        closeButton.setGraphic(closeIMAGE);
+
+        FontIcon icon = FontIcon.of(BootstrapIcons.SPEEDOMETER);
+        icon.setIconColor(Color.WHITE);
+        icon.setIconSize(16);
+
+        // Add icon to a created button
+        velocidadavance.setGraphic(icon);
+
 
     }
 
 
-    public void windowButtons(ActionEvent s) throws IOException {
+    public void windowButtons(ActionEvent s) {
 
        Button pressedB=(Button) s.getSource();
 
        Stage currentStage = (Stage) pressedB.getScene().getWindow();
 
-        if(pressedB.getId().equals("minimize")){
+        if(pressedB.getId().contains("minimize")){
 
             // Instance of the animation
-            AnimationFX fx = new ZoomOut(main);
+            AnimationFX fx = new ZoomOut(mainScreen);
 
             // Speed of the animation
             fx.setSpeed(1.5);
 
             // Reset the finish state after plays the animation
             fx.setResetOnFinished(true);
-            fx.setOnFinished(actionEvent -> currentStage.setIconified(true));
+            fx.setOnFinished(_ -> currentStage.setIconified(true));
 
             // Playing the animation
             fx.play();
-       }
+        }
 
-        else if(pressedB.getId().equals("maximize")){
+        else if(pressedB.getId().contains("maximize")){
 
             Screen screen = Screen.getPrimary();
             Rectangle2D bounds = screen.getVisualBounds();
@@ -94,12 +111,12 @@ public class Controller {
 
             pressedB.setId("normalize");
 
-            maximize.setGraphic(i4);
+            maximizeButton.setGraphic(normalizeIMAGE);
 
 
         }
 
-        else if(pressedB.getId().equals("normalize")){
+        else if(pressedB.getId().contains("normalize")){
 
 
             currentStage.setWidth(800);
@@ -116,17 +133,17 @@ public class Controller {
             // Set default behavior of the maximize state
 
             pressedB.setId("maximize");
-            maximize.setGraphic(i2);
+            maximizeButton.setGraphic(maximizeIMAGE);
 
 
         }
 
         else {
 
-            AnimationFX animation = new FadeOut(main);
+            AnimationFX animation = new FadeOut(mainScreen);
             animation.setSpeed(1);
 
-            Timeline delay=new Timeline(new KeyFrame(Duration.seconds(0.8), e -> currentStage.close()));
+            Timeline delay=new Timeline(new KeyFrame(Duration.seconds(0.8), _ -> currentStage.close()));
             delay.play();
 
             animation.play();
@@ -135,6 +152,28 @@ public class Controller {
 
     }
 
+    public void leftButtons(ActionEvent s){
+
+        Button pressedButton=(Button) s.getSource();
+
+        if(pressedButton.getId().contains("velocidad")){
+
+            pantalla1.setVisible(true);
+
+            velocidadavance.setStyle("-fx-text-fill: #4cacf4");
+
+            FontIcon icon = FontIcon.of(BootstrapIcons.SPEEDOMETER);
+            icon.setIconColor(Color.valueOf("#4cacf4"));
+            icon.setIconSize(16);
+
+            // Add icon to a created button
+            velocidadavance.setGraphic(icon);
+
+
+        }
+
+
+    }
 
 
 }

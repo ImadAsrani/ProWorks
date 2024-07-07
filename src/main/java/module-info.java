@@ -5,6 +5,8 @@ module com.workmanager.workmanager {
     requires jdk.jdi;
     requires mysql.connector.j;
     requires animatefx;
+    requires org.kordamp.ikonli.javafx;
+    requires org.kordamp.ikonli.bootstrapicons;
 
 
     opens com.workmanager.workmanager to javafx.fxml;

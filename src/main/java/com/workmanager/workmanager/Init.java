@@ -24,7 +24,6 @@ public class Init extends Application {
 
         Scene scene = new Scene(fxmlLoader.load(), 800, 500, Color.TRANSPARENT);
 
-
         // Removing Windows border
 
         stage.initStyle(StageStyle.TRANSPARENT);
