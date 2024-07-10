@@ -1,6 +1,11 @@
 
 /* Set the style of app main window */
 
+#prueba{
+      -fx-background-color: transparent;
+        -fx-background-radius: 9 9 12 12;
+}
+
 
 #mainScreen{
 
@@ -9,6 +14,14 @@
     -fx-background-color: white;
 
 }
+
+#addMaterialMainScreen{
+
+       -fx-background-color: transparent;
+       -fx-background-radius: 9 9 12 12;
+       -fx-background-color: white;
+
+ }
 
 /* Gradient background when hoovering over the window buttons */
 
@@ -42,24 +55,8 @@
 
 
 
-/* Font test */
-
-
 .leftbuttons {
     -fx-background-color: transparent;
 }
-
-.leftbuttons {
-    -fx-text-fill: white;
-}
-
-.leftbuttons:hover {
-    -fx-text-fill: #4cacf4;
-}
-
-.leftbuttons:pressed {
-    -fx-text-fill: #3481b2;
-}
-
 
 

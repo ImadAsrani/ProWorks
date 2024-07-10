@@ -1,26 +1,43 @@
 package com.workmanager.workmanager;
 
-import animatefx.animation.AnimationFX;
-import animatefx.animation.FadeOut;
-import animatefx.animation.ZoomOut;
+import animatefx.animation.*;
+import com.workmanager.workmanager.db.DBManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import org.kordamp.ikonli.bootstrapicons.BootstrapIcons;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+import java.io.IOException;
+
+
 public class Controller {
+
+
+    private double corX=0;
+    private double corY=0;
 
     // Window frame buttons
     @FXML
@@ -28,7 +45,7 @@ public class Controller {
 
     // Left panel buttons
     @FXML
-    private Button velocidadavance;
+    private Button velocidadavance, pedidomaterial;
 
     @FXML
     private Pane mainScreen;
@@ -39,16 +56,220 @@ public class Controller {
 
     // The different screens in the app
     @FXML
-    private VBox pantalla1;
-
+    private VBox laterald, centrod, herramientasTorno, herramientasCentro;
 
     @FXML
-    private void initialize(){
+    private Label titulo1, titulo2;
 
-        ImageView minimizeIMAGE=new ImageView(new Image("file:src/main/resources/Images/WindowButtons/minimize.png"));
-        ImageView closeIMAGE=new ImageView(new Image("file:src/main/resources/Images/WindowButtons/close.png"));
-        maximizeIMAGE =new ImageView(new Image("file:src/main/resources/Images/WindowButtons/maximize.png"));
-        normalizeIMAGE =new ImageView(new Image("file:src/main/resources/Images/WindowButtons/normalize.png"));
+    @FXML
+    private ChoiceBox<String> materiales;
+
+
+    // Initialize method
+
+    @FXML
+    private void initialize() {
+
+        // Windows button design, image.
+        windowButtonsDesign();
+
+
+        // Left panel buttons icons
+        leftButtonsIcons();
+
+
+        // Set custom fonts
+        setFonts();
+
+        // Default init settings
+        initSettings();
+
+
+
+
+        // -- pruebas codigo
+
+        materiales.getItems().add("F114");
+
+
+    }
+
+
+    // First step, select the screen
+
+    public void leftButtons(ActionEvent s) {
+
+        Button pressedButton = (Button) s.getSource();
+
+        if (pressedButton.equals(laterald.getChildren().getFirst())) {
+
+            checkPressed((Button) laterald.getChildren().getFirst());
+
+        } else if (pressedButton.equals(laterald.getChildren().get(1))) {
+
+            checkPressed((Button) laterald.getChildren().get(1));
+
+        }
+
+
+
+    }
+
+    // 2.A Feed and speed calculator
+
+    public void feedAndSpeedCalculator(ActionEvent s){
+
+            Button selected=(Button) s.getSource();
+
+        if(selected.getText().contains("Centro")){
+
+                herramientasCentro.setVisible(true);
+                herramientasCentro.setManaged(true);
+
+                herramientasTorno.setVisible(false);
+                herramientasTorno.setManaged(false);
+
+        } else {
+
+            herramientasCentro.setVisible(false);
+            herramientasCentro.setManaged(false);
+
+            herramientasTorno.setVisible(true);
+            herramientasTorno.setManaged(true);
+
+        }
+
+
+    }
+
+
+
+
+
+
+    public void addMaterial(){
+
+        // Create a new stage for adding material function
+
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(Init.class.getResource("addMaterial.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 415, 215, Color.TRANSPARENT);
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.TRANSPARENT);
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+
+            Stage stagePrincipal= (Stage) titulo1.getScene().getWindow();
+
+
+            // Move the new opened Window
+
+            scene.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    corX=mouseEvent.getX();
+                    corY=mouseEvent.getY();
+
+                }
+            });
+
+            // Setting new coordenates when dragging windows
+
+            scene.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    stage.setX(mouseEvent.getScreenX()-corX);
+                    stage.setY(mouseEvent.getScreenY()-corY);
+
+                }
+            });
+
+            stage.setTitle("Añadir nuevo material");
+            stage.setScene(scene);
+
+            stage.show();
+
+            stage.setX((stagePrincipal.getX()+stagePrincipal.getWidth()/2)-(stage.getWidth()/2));
+            stage.setY((stagePrincipal.getY()+stagePrincipal.getHeight()/2)-(stage.getHeight()/2));
+
+
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+
+
+
+
+    }
+
+
+
+
+
+    // Colorize the selected left panel buttons and enable the linked scene to the selected button
+
+    public void checkPressed(Button selected){
+
+
+        // Set all the buttons text and icons white
+
+        for(int i=0; i<laterald.getChildren().size(); i++){
+
+            Button b=(Button) laterald.getChildren().get(i);
+
+            b.setStyle("-fx-text-fill: white");
+
+            FontIcon icono=(FontIcon) b.getGraphic();
+
+            icono.setIconColor(Color.WHITE);
+            b.setGraphic(icono);
+
+        }
+
+
+        // Set the selected button text and icon blue
+
+        selected.setStyle("-fx-text-fill: #4cacf4");
+        FontIcon icono=(FontIcon) selected.getGraphic();
+        icono.setIconColor(Color.valueOf("#4cacf4"));
+        selected.setGraphic(icono);
+
+
+        // Hide and disable managed state of all the windows
+
+        for(Node s:centrod.getChildren()){
+
+            VBox selectedVbox=(VBox) s;
+            selectedVbox.setVisible(false);
+            selectedVbox.setManaged(false);
+
+        }
+
+        // Show and set managed the selected window
+
+        centrod.getChildren().get(laterald.getChildren().indexOf(selected)).setVisible(true);
+        centrod.getChildren().get(laterald.getChildren().indexOf(selected)).setManaged(true);
+
+
+    }
+
+
+
+
+
+    // Default methods of the window buttons.
+
+    private void windowButtonsDesign(){
+
+        ImageView minimizeIMAGE = new ImageView(new Image("file:src/main/resources/Images/WindowButtons/minimize.png"));
+        ImageView closeIMAGE = new ImageView(new Image("file:src/main/resources/Images/WindowButtons/close.png"));
+        maximizeIMAGE = new ImageView(new Image("file:src/main/resources/Images/WindowButtons/maximize.png"));
+        normalizeIMAGE = new ImageView(new Image("file:src/main/resources/Images/WindowButtons/normalize.png"));
 
         minimizeIMAGE.setFitWidth(13);
         minimizeIMAGE.setFitHeight(13);
@@ -66,24 +287,15 @@ public class Controller {
         maximizeButton.setGraphic(maximizeIMAGE);
         closeButton.setGraphic(closeIMAGE);
 
-        FontIcon icon = FontIcon.of(BootstrapIcons.SPEEDOMETER);
-        icon.setIconColor(Color.WHITE);
-        icon.setIconSize(16);
-
-        // Add icon to a created button
-        velocidadavance.setGraphic(icon);
-
-
     }
 
+    public void windowButtonsFunctionallity(ActionEvent s) {
 
-    public void windowButtons(ActionEvent s) {
+        Button pressedB = (Button) s.getSource();
 
-       Button pressedB=(Button) s.getSource();
+        Stage currentStage = (Stage) pressedB.getScene().getWindow();
 
-       Stage currentStage = (Stage) pressedB.getScene().getWindow();
-
-        if(pressedB.getId().contains("minimize")){
+        if (pressedB.getId().contains("minimize")) {
 
             // Instance of the animation
             AnimationFX fx = new ZoomOut(mainScreen);
@@ -97,9 +309,8 @@ public class Controller {
 
             // Playing the animation
             fx.play();
-        }
 
-        else if(pressedB.getId().contains("maximize")){
+        } else if (pressedB.getId().contains("maximize")) {
 
             Screen screen = Screen.getPrimary();
             Rectangle2D bounds = screen.getVisualBounds();
@@ -114,9 +325,7 @@ public class Controller {
             maximizeButton.setGraphic(normalizeIMAGE);
 
 
-        }
-
-        else if(pressedB.getId().contains("normalize")){
+        } else if (pressedB.getId().contains("normalize")) {
 
 
             currentStage.setWidth(800);
@@ -136,14 +345,12 @@ public class Controller {
             maximizeButton.setGraphic(maximizeIMAGE);
 
 
-        }
-
-        else {
+        } else {
 
             AnimationFX animation = new FadeOut(mainScreen);
             animation.setSpeed(1);
 
-            Timeline delay=new Timeline(new KeyFrame(Duration.seconds(0.8), _ -> currentStage.close()));
+            Timeline delay = new Timeline(new KeyFrame(Duration.seconds(0.8), _ -> currentStage.close()));
             delay.play();
 
             animation.play();
@@ -152,25 +359,67 @@ public class Controller {
 
     }
 
-    public void leftButtons(ActionEvent s){
 
-        Button pressedButton=(Button) s.getSource();
 
-        if(pressedButton.getId().contains("velocidad")){
 
-            pantalla1.setVisible(true);
 
-            velocidadavance.setStyle("-fx-text-fill: #4cacf4");
 
-            FontIcon icon = FontIcon.of(BootstrapIcons.SPEEDOMETER);
-            icon.setIconColor(Color.valueOf("#4cacf4"));
-            icon.setIconSize(16);
+    // Design methods (Like animations, fonts, etc).
 
-            // Add icon to a created button
-            velocidadavance.setGraphic(icon);
+    public void onHover(MouseEvent s){
 
+        AnimationFX animation = new Pulse((Button)s.getSource());
+        animation.setSpeed(2);
+        animation.setCycleCount(1);
+        animation.play();
+
+    }
+    public void setFonts(){
+
+        for(int i=0; i<laterald.getChildren().size(); i++){
+            Button currentB=(Button)laterald.getChildren().get(i);
+            currentB.setFont(Font.loadFont(getClass().getResourceAsStream("/fonts/bison.ttf"), 14));
+        }
+
+        titulo1.setFont(Font.loadFont(getClass().getResourceAsStream("/fonts/Gobold.otf"), 20));
+        titulo2.setFont(Font.loadFont(getClass().getResourceAsStream("/fonts/Gobold.otf"), 20));
+
+    }
+    public void leftButtonsIcons(){
+
+        // Set icons to left panel buttons
+
+        FontIcon pedidoMaterialIcon = FontIcon.of(BootstrapIcons.CART_FILL);
+        pedidoMaterialIcon.setIconColor(Color.WHITE);
+        pedidoMaterialIcon.setIconSize(16);
+
+        // Add icon to a created button
+        pedidomaterial.setGraphic(pedidoMaterialIcon);
+
+        FontIcon speedFeedIcon = FontIcon.of(BootstrapIcons.SPEEDOMETER);
+        speedFeedIcon.setIconColor(Color.WHITE);
+        speedFeedIcon.setIconSize(16);
+
+        // Add icon to a created button
+        velocidadavance.setGraphic(speedFeedIcon);
+
+    }
+
+    // Default initialize settings
+
+    private void initSettings(){
+
+        for(int i=0; i<centrod.getChildren().size(); i++){
+
+            centrod.getChildren().get(i).setManaged(false);
+            centrod.getChildren().get(i).setVisible(false);
 
         }
+
+        herramientasCentro.setVisible(false);
+        herramientasCentro.setManaged(false);
+        herramientasTorno.setVisible(false);
+        herramientasTorno.setManaged(false);
 
 
     }
