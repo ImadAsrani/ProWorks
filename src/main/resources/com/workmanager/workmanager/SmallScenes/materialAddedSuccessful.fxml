@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="prueba" prefHeight="215.0" prefWidth="415.0" stylesheets="@../../../../CSS/Index.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.workmanager.workmanager.ControllerSuccessfulAddedMaterial">
+   <children>
+      <BorderPane fx:id="checkScreen" layoutX="8.0" layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" stylesheets="@../../../../CSS/Index.css">
+         <top>
+            <HBox alignment="TOP_RIGHT" prefHeight="25.0" prefWidth="400.0" spacing="5.0" BorderPane.alignment="CENTER">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+         </top>
+         <center>
+            <VBox alignment="CENTER" fillWidth="false" prefHeight="142.0" prefWidth="180.0" spacing="5.0" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="30.0" left="10.0" right="10.0" top="15.0" />
+               </BorderPane.margin>
+               <children>
+                  <ImageView fitHeight="92.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../Images/AppIcons/check.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="Añadido correctamente">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="materialAdded" text="Se ha añadido correctamente el material F114">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="11.0" />
+                     </font></Label>
+               </children>
+            </VBox>
+         </center>
+         <effect>
+            <DropShadow height="20.0" radius="9.5" width="20.0">
+               <color>
+                  <Color red="0.2368421107530594" green="0.2368421107530594" blue="0.2368421107530594" />
+               </color>
+            </DropShadow>
+         </effect>
+      </BorderPane>
+   </children>
+</AnchorPane>

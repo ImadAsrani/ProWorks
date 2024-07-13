@@ -2,25 +2,32 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="prueba" prefHeight="215.0" prefWidth="415.0" stylesheets="@../../../CSS/Index.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.workmanager.workmanager.addMaterialController">
    <children>
       <BorderPane fx:id="addMaterialMainScreen" layoutX="8.0" layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" stylesheets="@../../../CSS/Index.css">
           <top>
-              <HBox alignment="TOP_RIGHT" prefHeight="47.0" prefWidth="232.0" spacing="5.0" BorderPane.alignment="CENTER">
+              <HBox alignment="TOP_RIGHT" prefHeight="25.0" prefWidth="400.0" spacing="5.0" BorderPane.alignment="CENTER">
                   <children>
-                      <HBox alignment="CENTER_LEFT" prefHeight="37.0" prefWidth="481.0">
+                      <HBox prefHeight="22.0" prefWidth="369.0">
                      <children>
-                        <Label fx:id="addMaterialLabel" text="Añadir material nuevo" />
+                        <Label fx:id="addMaterialLabel" text="Añadir material nuevo">
+                           <font>
+                              <Font size="11.0" />
+                           </font></Label>
                      </children>
                      <padding>
-                        <Insets left="10.0" />
+                        <Insets left="5.0" top="2.0" />
                      </padding>
                       </HBox>
                       <Button fx:id="closeButton" mnemonicParsing="false" onAction="#windowButtonsFunctionallity" prefHeight="20.0" prefWidth="25.0" styleClass="botonesventana" stylesheets="@../../../CSS/Index.css" />
@@ -37,6 +44,62 @@
                </color>
             </DropShadow>
          </effect>
+         <center>
+            <VBox fillWidth="false" prefHeight="142.0" prefWidth="180.0" spacing="5.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Nombre del material" />
+                  <TextField fx:id="materialName" prefHeight="10.0" prefWidth="126.0" />
+                  <Label text="Dureza">
+                     <padding>
+                        <Insets top="15.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="materialHardness" prefHeight="26.0" prefWidth="126.0" promptText="Dureza en HB" />
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="30.0" left="10.0" right="10.0" top="15.0" />
+               </BorderPane.margin>
+            </VBox>
+         </center>
+         <right>
+            <VBox alignment="CENTER_RIGHT" prefHeight="226.0" prefWidth="180.0" spacing="5.0" BorderPane.alignment="CENTER_RIGHT">
+               <BorderPane.margin>
+                  <Insets left="10.0" right="10.0" />
+               </BorderPane.margin>
+               <children>
+                  <Label prefHeight="18.0" prefWidth="115.0" text="Color identificativo" />
+                  <ColorPicker fx:id="materialColor" prefHeight="65.0" prefWidth="114.0" />
+                  <VBox alignment="BOTTOM_RIGHT" prefHeight="109.0" prefWidth="180.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#addMaterialFunction" prefHeight="30.0" prefWidth="113.0" text="Añadir material" />
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="15.0" />
+                     </padding>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+            </VBox>
+         </right>
+         <bottom>
+            <VBox alignment="BOTTOM_LEFT" fillWidth="false" prefHeight="32.0" prefWidth="314.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="addingMaterialErrors" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="20.0" />
+               </padding>
+            </VBox>
+         </bottom>
       </BorderPane>
    </children>
 </AnchorPane>

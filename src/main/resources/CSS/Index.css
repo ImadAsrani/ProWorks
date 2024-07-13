@@ -7,7 +7,7 @@
 }
 
 
-#mainScreen{
+#mainScreen, #checkScreen{
 
     -fx-background-color: transparent;
     -fx-background-radius: 9 9 12 12;

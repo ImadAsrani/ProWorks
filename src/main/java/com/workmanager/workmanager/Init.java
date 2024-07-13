@@ -3,10 +3,10 @@ package com.workmanager.workmanager;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -17,9 +17,13 @@ public class Init extends Application {
     private double corX=0;
     private double corY=0;
 
+    private Stage primaryStage;
+
 
     @Override
     public void start(Stage stage) throws IOException {
+
+        primaryStage=stage;
 
         FXMLLoader fxmlLoader = new FXMLLoader(Init.class.getResource("GUI.fxml"));
 
@@ -61,6 +65,7 @@ public class Init extends Application {
 
 
     }
+
 
     public static void main(String[] args) {
         launch();

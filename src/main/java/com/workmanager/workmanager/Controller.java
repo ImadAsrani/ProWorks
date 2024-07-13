@@ -1,11 +1,9 @@
 package com.workmanager.workmanager;
 
 import animatefx.animation.*;
-import com.workmanager.workmanager.db.DBManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -17,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -35,6 +32,7 @@ import java.io.IOException;
 
 public class Controller {
 
+    // Variables for dragging the "add new material" window
 
     private double corX=0;
     private double corY=0;
@@ -95,6 +93,7 @@ public class Controller {
     }
 
 
+
     // First step, select the screen
 
     public void leftButtons(ActionEvent s) {
@@ -146,6 +145,7 @@ public class Controller {
 
 
 
+    // Adding material ( 2.A OPTION )
 
     public void addMaterial(){
 
@@ -166,24 +166,16 @@ public class Controller {
 
             // Move the new opened Window
 
-            scene.setOnMousePressed(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    corX=mouseEvent.getX();
-                    corY=mouseEvent.getY();
-
-                }
+            scene.setOnMousePressed(mouseEvent -> {
+                corX=mouseEvent.getX();
+                corY=mouseEvent.getY();
             });
 
             // Setting new coordenates when dragging windows
 
-            scene.setOnMouseDragged(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
+            scene.setOnMouseDragged(mouseEvent ->  {
                     stage.setX(mouseEvent.getScreenX()-corX);
                     stage.setY(mouseEvent.getScreenY()-corY);
-
-                }
             });
 
             stage.setTitle("Añadir nuevo material");
