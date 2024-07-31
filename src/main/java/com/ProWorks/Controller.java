@@ -1,6 +1,7 @@
-package com.workmanager.workmanager;
+package com.ProWorks;
 
 import animatefx.animation.*;
+import com.ProWorks.classes.Materials;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -28,6 +29,8 @@ import org.kordamp.ikonli.bootstrapicons.BootstrapIcons;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 
 public class Controller {
@@ -46,6 +49,10 @@ public class Controller {
     private Button velocidadavance, pedidomaterial;
 
     @FXML
+    private Button deleteMaterialsButton, materialscolors;
+
+
+    @FXML
     private Pane mainScreen;
 
     // Image assets from the maximize and normalize buttons
@@ -60,7 +67,7 @@ public class Controller {
     private Label titulo1, titulo2;
 
     @FXML
-    private ChoiceBox<String> materiales;
+    private ChoiceBox<String> materialsChoiceBox;
 
 
     // Initialize method
@@ -71,10 +78,8 @@ public class Controller {
         // Windows button design, image.
         windowButtonsDesign();
 
-
         // Left panel buttons icons
         leftButtonsIcons();
-
 
         // Set custom fonts
         setFonts();
@@ -82,12 +87,11 @@ public class Controller {
         // Default init settings
         initSettings();
 
+        // Update the ChoiceBox of materials
+        updateMaterials();
 
-
-
-        // -- pruebas codigo
-
-        materiales.getItems().add("F114");
+        // Set the color of the materials
+        choiceBOXfunction();
 
 
     }
@@ -95,7 +99,6 @@ public class Controller {
 
 
     // First step, select the screen
-
     public void leftButtons(ActionEvent s) {
 
         Button pressedButton = (Button) s.getSource();
@@ -115,7 +118,6 @@ public class Controller {
     }
 
     // 2.A Feed and speed calculator
-
     public void feedAndSpeedCalculator(ActionEvent s){
 
             Button selected=(Button) s.getSource();
@@ -142,18 +144,14 @@ public class Controller {
     }
 
 
-
-
-
     // Adding material ( 2.A OPTION )
-
     public void addMaterial(){
 
         // Create a new stage for adding material function
 
         try {
 
-            FXMLLoader fxmlLoader = new FXMLLoader(Init.class.getResource("addMaterial.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Init.class.getResource("/com/ProWorks/ProWorks/addMaterial.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 415, 215, Color.TRANSPARENT);
             Stage stage = new Stage();
             stage.initStyle(StageStyle.TRANSPARENT);
@@ -186,6 +184,8 @@ public class Controller {
             stage.setX((stagePrincipal.getX()+stagePrincipal.getWidth()/2)-(stage.getWidth()/2));
             stage.setY((stagePrincipal.getY()+stagePrincipal.getHeight()/2)-(stage.getHeight()/2));
 
+            stage.setOnHiding(_ -> updateMaterials() );
+
 
 
         } catch (IOException e) {
@@ -199,12 +199,104 @@ public class Controller {
 
     }
 
+    // Removing material ( 2.A OPTION )
+    public void deleteMaterials() throws SQLException {
 
+        if(!materialsChoiceBox.getItems().isEmpty()){
+
+            int selectedMaterial= materialsChoiceBox.getSelectionModel().getSelectedIndex();
+
+            new addMaterialController().removeMaterialFromDB(materialsChoiceBox.getItems().get(selectedMaterial));
+
+            materialsChoiceBox.getItems().remove(selectedMaterial);
+
+            materialsChoiceBox.getSelectionModel().selectFirst();
+
+            if(materialsChoiceBox.getItems().isEmpty()){
+                deleteMaterialsButton.setDisable(true);
+            }
+
+        } else {
+
+            deleteMaterialsButton.setDisable(true);
+
+        }
+
+
+
+
+
+
+    }
+
+    // Setting the color of the material to a button (VISUAL) ( 2.A OPTION )
+    public void choiceBOXfunction(){
+
+
+        materialsChoiceBox.setOnAction(_ -> {
+
+            Timeline je=new Timeline(new KeyFrame(Duration.seconds(0.1), _ -> {
+
+                materialscolors.setVisible(true);
+                materialscolors.setManaged(true);
+
+                if(!materialsChoiceBox.getItems().isEmpty()){
+
+                    ArrayList<Materials> m=new addMaterialController().recoverMaterialsFromDB();
+
+                    int num=materialsChoiceBox.getSelectionModel().getSelectedIndex();
+
+                    String hex2 = "#" + Integer.toHexString(m.get(num).getColor().hashCode());
+
+                    materialscolors.setStyle("-fx-background-color: " + hex2);
+
+                } else {
+                    materialscolors.setVisible(false);
+                    materialscolors.setManaged(false);
+                }
+
+
+            }));
+
+            je.play();
+
+
+        });
+
+    }
+
+    // Updating the choicebox with new materials / deleted materials
+    public void updateMaterials(){
+
+        ArrayList<Materials> m=new addMaterialController().recoverMaterialsFromDB();
+
+        // Clear the choicebox items
+
+        materialsChoiceBox.getItems().clear();
+
+        for (Materials materials : m) {
+
+            // Filling the choicebox with the name of all materials previously got from the recoverMaterialsfromDB() function
+            materialsChoiceBox.getItems().add(materials.getName());
+        }
+
+        if(!m.isEmpty()){
+
+            // if the choicebox isn't empty, set the last item as selected and enable the delete button
+            materialsChoiceBox.getSelectionModel().selectLast();
+            deleteMaterialsButton.setDisable(false);
+        } else {
+
+            // if the choicebox its empty, set the button as disabled
+            deleteMaterialsButton.setDisable(true);
+
+        }
+
+    }
 
 
 
     // Colorize the selected left panel buttons and enable the linked scene to the selected button
-
     public void checkPressed(Button selected){
 
 
@@ -258,10 +350,10 @@ public class Controller {
 
     private void windowButtonsDesign(){
 
-        ImageView minimizeIMAGE = new ImageView(new Image("file:src/main/resources/Images/WindowButtons/minimize.png"));
-        ImageView closeIMAGE = new ImageView(new Image("file:src/main/resources/Images/WindowButtons/close.png"));
-        maximizeIMAGE = new ImageView(new Image("file:src/main/resources/Images/WindowButtons/maximize.png"));
-        normalizeIMAGE = new ImageView(new Image("file:src/main/resources/Images/WindowButtons/normalize.png"));
+        ImageView minimizeIMAGE = new ImageView(new Image("file:src/main/resources/com/ProWorks/ProWorks/Images/WindowButtons/minimize.png"));
+        ImageView closeIMAGE = new ImageView(new Image("file:src/main/resources/com/ProWorks/ProWorks/Images/WindowButtons/close.png"));
+        maximizeIMAGE = new ImageView(new Image("file:src/main/resources/com/ProWorks/ProWorks/Images/WindowButtons/maximize.png"));
+        normalizeIMAGE = new ImageView(new Image("file:src/main/resources/com/ProWorks/ProWorks/Images/WindowButtons/normalize.png"));
 
         minimizeIMAGE.setFitWidth(13);
         minimizeIMAGE.setFitHeight(13);
@@ -280,7 +372,6 @@ public class Controller {
         closeButton.setGraphic(closeIMAGE);
 
     }
-
     public void windowButtonsFunctionallity(ActionEvent s) {
 
         Button pressedB = (Button) s.getSource();
@@ -369,12 +460,14 @@ public class Controller {
     public void setFonts(){
 
         for(int i=0; i<laterald.getChildren().size(); i++){
-            Button currentB=(Button)laterald.getChildren().get(i);
-            currentB.setFont(Font.loadFont(getClass().getResourceAsStream("/fonts/bison.ttf"), 14));
+
+                Button currentB=(Button)laterald.getChildren().get(i);
+                currentB.setFont(Font.loadFont(getClass().getResourceAsStream("/com/ProWorks/ProWorks/fonts/bison.ttf"), 14));
+
         }
 
-        titulo1.setFont(Font.loadFont(getClass().getResourceAsStream("/fonts/Gobold.otf"), 20));
-        titulo2.setFont(Font.loadFont(getClass().getResourceAsStream("/fonts/Gobold.otf"), 20));
+        titulo1.setFont(Font.loadFont(getClass().getResourceAsStream("/com/ProWorks/ProWorks/fonts/Gobold.otf"), 20));
+        titulo2.setFont(Font.loadFont(getClass().getResourceAsStream("/com/ProWorks/ProWorks/fonts/Gobold.otf"), 20));
 
     }
     public void leftButtonsIcons(){
@@ -399,7 +492,7 @@ public class Controller {
 
     // Default initialize settings
 
-    private void initSettings(){
+    public void initSettings(){
 
         for(int i=0; i<centrod.getChildren().size(); i++){
 
@@ -413,8 +506,14 @@ public class Controller {
         herramientasTorno.setVisible(false);
         herramientasTorno.setManaged(false);
 
+        materialscolors.setVisible(false);
+        materialscolors.setManaged(false);
+
 
     }
+
+
+
 
 
 }

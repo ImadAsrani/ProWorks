@@ -9,6 +9,6 @@ module com.workmanager.workmanager {
     requires org.kordamp.ikonli.bootstrapicons;
 
 
-    opens com.workmanager.workmanager to javafx.fxml;
-    exports com.workmanager.workmanager;
+    opens com.ProWorks to javafx.fxml;
+    exports com.ProWorks;
 }

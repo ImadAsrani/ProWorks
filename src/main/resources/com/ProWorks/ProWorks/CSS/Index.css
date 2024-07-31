@@ -1,0 +1,108 @@
+
+/* ChoiceBox style */
+
+.choiceBOX  {
+       -fx-background-color: #8D8D8D;
+        -fx-mark-color: white;
+}
+
+
+
+
+
+.choiceBOX .label  {
+    -fx-text-fill: white;
+}
+
+
+
+.choiceBOX .context-menu {
+   -fx-background-color: #4B4B4B;
+    -fx-background-radius: 4 4 4 4;
+}
+
+/*Blue buttons style*/
+
+.blueButtons{
+-fx-background-color: #3396FF;
+    -fx-text-fill: white;
+}
+
+.blueButtons:hover{
+-fx-background-color: #2765A7;
+}
+
+.blueButtons:pressed{
+-fx-background-color: #616161;
+}
+
+
+
+/*Red buttons style*/
+
+.redButtons{
+-fx-background-color: #FE3F3F;
+}
+
+.redButtons:pressed{
+-fx-background-color: #EE4122;
+}
+
+.redButtons:hover{
+-fx-background-color: #EA8776;
+}
+
+/*Machine buttons style*/
+
+.machineButtons{
+        -fx-padding: 8 23 8 23;
+    }
+
+
+/* Set the style of app main window */
+
+#mainScreen, #checkScreen, #addMaterialMainScreen{
+    -fx-background-color: transparent;
+    -fx-background-radius: 9 9 12 12;
+    -fx-background-color: white;
+}
+
+#SubAddMaterialMainScreen{
+    -fx-background-color: transparent;
+    -fx-background-radius: 9 9 12 12;
+}
+
+/* Gradient background when hoovering over the window buttons */
+
+.botonesventana:hover {
+
+    -fx-background-radius: 6;
+    -fx-background-color: linear-gradient(from 25% 55% to 100% 100%, #9e00fc, #07cdcc);
+    -fx-opacity: 0.5;
+
+}
+
+/* Remove background when no hoovering */
+
+.botonesventana {
+
+   -fx-background-color: transparent;
+
+}
+
+/* Coloring the background of left and center zones */
+
+#lateral{
+    -fx-background-color: #424242;
+    -fx-background-radius: 0 0 0 9;
+}
+
+#centro{
+    -fx-background-color: #F4F4F4;
+    -fx-background-radius: 0 0 9 0;
+}
+
+.leftbuttons {
+    -fx-background-color: transparent;
+}
+

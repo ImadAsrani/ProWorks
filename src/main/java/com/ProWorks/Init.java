@@ -1,15 +1,13 @@
-package com.workmanager.workmanager;
+package com.ProWorks;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.io.IOException;
 
 public class Init extends Application {
@@ -25,7 +23,7 @@ public class Init extends Application {
 
         primaryStage=stage;
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Init.class.getResource("GUI.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Init.class.getResource("/com/ProWorks/ProWorks/GUI.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load(), 800, 500, Color.TRANSPARENT);
 
@@ -54,7 +52,7 @@ public class Init extends Application {
             }
         });
 
-        stage.setTitle("WorkManager");
+        stage.setTitle("ProWorks");
 
         stage.setScene(scene);
 

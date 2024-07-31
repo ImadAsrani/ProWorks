@@ -1,4 +1,4 @@
-package com.workmanager.workmanager.db;
+package com.ProWorks.db;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,9 +17,6 @@ public class DBManager {
         this.user = user;
         this.password = password;
     }
-
-
-
 
     public ArrayList<String> selectSQLtoArrayList(String sql){
 

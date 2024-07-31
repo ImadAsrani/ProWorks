@@ -1,4 +1,4 @@
-package com.workmanager.workmanager.classes;
+package com.ProWorks.classes;
 
 import javafx.scene.paint.Color;
 

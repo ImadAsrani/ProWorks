@@ -1,4 +1,4 @@
-package com.workmanager.workmanager.db;
+package com.ProWorks.db;
 
 public class principal {
     public static void main(String[] args) {

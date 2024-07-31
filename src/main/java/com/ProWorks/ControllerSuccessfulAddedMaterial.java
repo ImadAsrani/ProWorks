@@ -1,8 +1,8 @@
-package com.workmanager.workmanager;
+package com.ProWorks;
 
 import animatefx.animation.*;
-import com.workmanager.workmanager.classes.middleClass;
-import com.workmanager.workmanager.classes.Materials;
+import com.ProWorks.classes.Materials;
+import com.ProWorks.classes.middleClass;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;

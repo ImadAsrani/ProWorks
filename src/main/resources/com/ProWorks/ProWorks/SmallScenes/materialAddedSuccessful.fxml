@@ -12,9 +12,9 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="prueba" prefHeight="215.0" prefWidth="415.0" stylesheets="@../../../../CSS/Index.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.workmanager.workmanager.ControllerSuccessfulAddedMaterial">
+<AnchorPane id="prueba" prefHeight="215.0" prefWidth="415.0" stylesheets="@../CSS/Index.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ProWorks.ControllerSuccessfulAddedMaterial">
    <children>
-      <BorderPane fx:id="checkScreen" layoutX="8.0" layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" stylesheets="@../../../../CSS/Index.css">
+      <BorderPane fx:id="checkScreen" layoutX="8.0" layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" stylesheets="@../CSS/Index.css">
          <top>
             <HBox alignment="TOP_RIGHT" prefHeight="25.0" prefWidth="400.0" spacing="5.0" BorderPane.alignment="CENTER">
                <padding>
@@ -30,7 +30,7 @@
                <children>
                   <ImageView fitHeight="92.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../Images/AppIcons/check.png" />
+                        <Image url="@../Images/AppIcons/check.png" />
                      </image>
                   </ImageView>
                   <Label text="Añadido correctamente">
